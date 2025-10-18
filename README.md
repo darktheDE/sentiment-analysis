@@ -74,14 +74,14 @@ Dự án nhằm mục đích xây dựng một ứng dụng web có khả năng:
 *   Node.js (để chạy các công cụ frontend nếu cần)
 *   Python 3.9+ (cho backend Lambda)
 
-### Triển khai Backend (Phần của Duy)
+### Triển khai Backend
 1.  Tạo IAM Role với các policy `AWSLambdaBasicExecutionRole`, `ComprehendReadOnly`, `TranslateReadOnly`.
 2.  Tạo Lambda Function, chọn runtime Python và gán Role đã tạo.
 3.  Dán code từ file `lambda/sentiment_function.py` vào trình soạn thảo code của Lambda.
 4.  Tạo REST API trên API Gateway, tạo resource `/analyze` với phương thức `POST`, tích hợp với Lambda Function.
 5.  Kích hoạt CORS và Deploy API.
 
-### Triển khai Frontend (Phần của Hưng)
+### Triển khai Frontend
 1.  Clone repository này về máy.
 2.  Mở file `frontend/script.js` và thay thế biến `apiUrl` bằng "Invoke URL" của API Gateway đã deploy.
 3.  Tạo repository mới trên GitHub và đẩy code lên.
