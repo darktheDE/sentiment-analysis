@@ -1,0 +1,19 @@
+# API Secrets - KHÔNG BAO GIỜ COMMIT!
+js/config.js
+.env
+
+# Node modules (nếu có)
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+docs/
+.github/

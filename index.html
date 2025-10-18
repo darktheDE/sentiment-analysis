@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ứng dụng phân tích cảm xúc văn bản bằng AI - AWS Comprehend">
+    <title>🎯 Sentiment Analyzer - Phân tích Cảm xúc</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header với gradient -->
+    <header class="header">
+        <div class="container">
+            <h1 class="header-title">🎯 Sentiment Analyzer</h1>
+            <p class="header-subtitle">Phân tích cảm xúc văn bản thông minh với AWS Comprehend</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Input Card -->
+            <div class="card input-card">
+                <h2 class="card-title">💬 Bạn muốn phân tích điều gì?</h2>
+                
+                <textarea 
+                    id="text-input" 
+                    class="text-input" 
+                    placeholder="Nhập hoặc dán văn bản của bạn vào đây...&#10;&#10;Ví dụ: Amazon Web Services is a great cloud platform. Jeff Bezos is the founder of Amazon, which is headquartered in Seattle."
+                    rows="6"
+                ></textarea>
+                
+                <button id="analyze-button" class="analyze-button">
+                    <span class="button-icon">🚀</span>
+                    <span class="button-text">Phân tích ngay</span>
+                    <span class="button-sparkle">✨</span>
+                </button>
+                
+                <p class="input-hint">💡 Mẹo: Nhấn Ctrl + Enter để phân tích nhanh</p>
+            </div>
+
+            <!-- Loading Message -->
+            <div id="loading-message" class="loading-message hidden">
+                <div class="loading-spinner"></div>
+                <p>🔄 Đang phân tích văn bản của bạn...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-section" class="results-section hidden">
+                
+                <!-- Quick Stats Cards -->
+                <div class="stats-grid">
+                    <!-- Sentiment Card -->
+                    <div class="stat-card sentiment-card">
+                        <div class="stat-icon" id="sentiment-icon">😊</div>
+                        <div class="stat-value" id="sentiment-value">--</div>
+                        <div class="stat-label">CẢM XÚC</div>
+                    </div>
+
+                    <!-- Entities Card -->
+                    <div class="stat-card entities-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value" id="entities-count">0</div>
+                        <div class="stat-label">THỰC THỂ</div>
+                    </div>
+
+                    <!-- Key Phrases Card -->
+                    <div class="stat-card phrases-card">
+                        <div class="stat-icon">🔑</div>
+                        <div class="stat-value" id="phrases-count">0</div>
+                        <div class="stat-label">CỤM TỪ KHÓA</div>
+                    </div>
+                </div>
+
+                <!-- Detailed Results Card -->
+                <div class="card results-card">
+                    <h3 class="card-title">📊 Phân tích chi tiết</h3>
+
+                    <!-- Sentiment Breakdown -->
+                    <div class="results-section-item">
+                        <h4 class="section-subtitle">Phân tích cảm xúc</h4>
+                        <div id="sentiment-breakdown" class="sentiment-breakdown">
+                            <!-- Sẽ được điền bằng JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Entities Table -->
+                    <div class="results-section-item">
+                        <h4 class="section-subtitle">Thực thể được tìm thấy</h4>
+                        <div id="entities-container" class="entities-container">
+                            <!-- Sẽ được điền bằng JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Key Phrases -->
+                    <div class="results-section-item">
+                        <h4 class="section-subtitle">Cụm từ quan trọng</h4>
+                        <div id="keyphrases-container" class="keyphrases-container">
+                            <!-- Sẽ được điền bằng JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Analyze Another Button -->
+                    <button id="reset-button" class="reset-button">
+                        ← Phân tích văn bản khác
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Error Message -->
+            <div id="error-message" class="error-message hidden">
+                <div class="error-icon">⚠️</div>
+                <h3>Đã xảy ra lỗi</h3>
+                <p id="error-text"></p>
+                <button id="retry-button" class="retry-button">Thử lại</button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Dự án môn Điện toán Đám mây (CLCO432779) - HCMUTE 2025</p>
+            <p>Phát triển bởi: Nguyễn Văn Quang Duy & Đỗ Kiến Hưng</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
