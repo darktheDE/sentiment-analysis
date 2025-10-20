@@ -13,8 +13,8 @@
     <!-- Header với gradient -->
     <header class="header">
         <div class="container">
-            <h1 class="header-title">🎯 Sentiment Analyzer</h1>
-            <p class="header-subtitle">Phân tích cảm xúc văn bản thông minh với AWS Comprehend</p>
+            <h1 class="header-title">Sentiment Analyzer</h1>
+            <p class="header-subtitle">Text & Image Sentiment Analysis Using AWS Comprehend APIs</p>
         </div>
     </header>
 
@@ -24,8 +24,21 @@
             
             <!-- Input Card -->
             <div class="card input-card">
-                <h2 class="card-title">💬 Bạn muốn phân tích điều gì?</h2>
+                <h2 class="card-title">Nhập nội dung cần phân tích</h2>
                 
+                <!-- Tabs: Văn bản hoặc Hình ảnh -->
+                <div class="input-tabs">
+                    <button class="tab-button active" data-tab="text">
+                        <span class="tab-icon">📄</span>
+                        <span>Text</span>
+                    </button>
+                    <button class="tab-button" data-tab="image">
+                        <span class="tab-icon">🖼</span>
+                        <span>Image</span>
+                    </button>
+                </div>
+                
+                <!-- Text Input -->
                 <textarea 
                     id="text-input" 
                     class="text-input" 
@@ -33,19 +46,36 @@
                     rows="6"
                 ></textarea>
                 
+                <!-- Image Input (ẩn mặc định) -->
+                <div id="image-input-container" class="image-input-container hidden">
+                    <div class="image-upload-box">
+                        <div class="upload-icon-wrapper">
+                            <svg class="upload-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                        </div>
+                        <p class="upload-text">Drag & drop image here</p>
+                        <p class="upload-text-secondary">or</p>
+                        <input type="file" id="image-input" accept="image/*" class="image-file-input">
+                        <label for="image-input" class="upload-button">Browse Files</label>
+                        <p class="upload-hint">Support: JPG, PNG, HEIC (Max 5MB)</p>
+                    </div>
+                </div>
+                
                 <button id="analyze-button" class="analyze-button">
-                    <span class="button-icon">🚀</span>
-                    <span class="button-text">Phân tích ngay</span>
-                    <span class="button-sparkle">✨</span>
+                    <span class="button-text">Analyze Now</span>
+                    <span class="button-arrow">→</span>
                 </button>
                 
-                <p class="input-hint">💡 Mẹo: Nhấn Ctrl + Enter để phân tích nhanh</p>
+                <p class="input-hint">Press Ctrl + Enter for quick analysis</p>
             </div>
 
             <!-- Loading Message -->
             <div id="loading-message" class="loading-message hidden">
                 <div class="loading-spinner"></div>
-                <p>🔄 Đang phân tích văn bản của bạn...</p>
+                <p>Analyzing your content...</p>
             </div>
 
             <!-- Results Section -->
@@ -57,31 +87,31 @@
                     <div class="stat-card sentiment-card">
                         <div class="stat-icon" id="sentiment-icon">😊</div>
                         <div class="stat-value" id="sentiment-value">--</div>
-                        <div class="stat-label">CẢM XÚC</div>
+                        <div class="stat-label">SENTIMENT</div>
                     </div>
 
                     <!-- Entities Card -->
                     <div class="stat-card entities-card">
                         <div class="stat-icon">👥</div>
                         <div class="stat-value" id="entities-count">0</div>
-                        <div class="stat-label">THỰC THỂ</div>
+                        <div class="stat-label">ENTITIES</div>
                     </div>
 
                     <!-- Key Phrases Card -->
                     <div class="stat-card phrases-card">
                         <div class="stat-icon">🔑</div>
                         <div class="stat-value" id="phrases-count">0</div>
-                        <div class="stat-label">CỤM TỪ KHÓA</div>
+                        <div class="stat-label">KEY PHRASES</div>
                     </div>
                 </div>
 
                 <!-- Detailed Results Card -->
                 <div class="card results-card">
-                    <h3 class="card-title">📊 Phân tích chi tiết</h3>
+                    <h3 class="card-title">Detailed Analysis</h3>
 
                     <!-- Sentiment Breakdown -->
                     <div class="results-section-item">
-                        <h4 class="section-subtitle">Phân tích cảm xúc</h4>
+                        <h4 class="section-subtitle">Sentiment Distribution</h4>
                         <div id="sentiment-breakdown" class="sentiment-breakdown">
                             <!-- Sẽ được điền bằng JavaScript -->
                         </div>
@@ -89,7 +119,7 @@
 
                     <!-- Entities Table -->
                     <div class="results-section-item">
-                        <h4 class="section-subtitle">Thực thể được tìm thấy</h4>
+                        <h4 class="section-subtitle">Named Entities</h4>
                         <div id="entities-container" class="entities-container">
                             <!-- Sẽ được điền bằng JavaScript -->
                         </div>
@@ -97,15 +127,48 @@
 
                     <!-- Key Phrases -->
                     <div class="results-section-item">
-                        <h4 class="section-subtitle">Cụm từ quan trọng</h4>
+                        <h4 class="section-subtitle">Key Phrases</h4>
                         <div id="keyphrases-container" class="keyphrases-container">
+                            <!-- Sẽ được điền bằng JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Language & Translation Info (MỚI) -->
+                    <div class="results-section-item">
+                        <h4 class="section-subtitle">Language Detection</h4>
+                        <div id="language-info" class="language-info">
+                            <!-- Sẽ được điền bằng JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- PII Detection (MỚI) -->
+                    <div class="results-section-item">
+                        <h4 class="section-subtitle">Personal Information (PII)</h4>
+                        <div id="pii-container" class="pii-container">
+                            <!-- Sẽ được điền bằng JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Syntax Analysis (MỚI) -->
+                    <div class="results-section-item">
+                        <h4 class="section-subtitle">Syntax Analysis</h4>
+                        <div id="syntax-container" class="syntax-container">
+                            <!-- Sẽ được điền bằng JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Toxicity Analysis (MỚI) -->
+                    <div class="results-section-item">
+                        <h4 class="section-subtitle">Toxicity Detection</h4>
+                        <div id="toxicity-container" class="toxicity-container">
                             <!-- Sẽ được điền bằng JavaScript -->
                         </div>
                     </div>
 
                     <!-- Analyze Another Button -->
                     <button id="reset-button" class="reset-button">
-                        ← Phân tích văn bản khác
+                        <span class="button-arrow-left">←</span>
+                        <span>Analyze Another</span>
                     </button>
                 </div>
 
@@ -125,8 +188,13 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>Dự án môn Điện toán Đám mây (CLCO432779) - HCMUTE 2025</p>
-            <p>Phát triển bởi: Nguyễn Văn Quang Duy & Đỗ Kiến Hưng</p>
+            <p>Dự án cuối kỳ môn Điện toán Đám mây (CLCO432779) - HCMUTE 2025</p>
+            <p>
+                Phát triển bởi:
+                <a href="https://github.com/QuangDuyReal" target="_blank" rel="noopener noreferrer">Nguyễn Văn Quang Duy</a> (Lead, Backend)
+                &amp;
+                <a href="https://github.com/darktheDE" target="_blank" rel="noopener noreferrer">Đỗ Kiến Hưng</a> (Frontend, Deployment)
+            </p>
         </div>
     </footer>
 

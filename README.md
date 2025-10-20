@@ -195,8 +195,6 @@ Amazon Web Services is a great cloud platform. Jeff Bezos is the founder of Amaz
 
 ## Lưu ý quan trọng
 
-⚠️ **Bảo mật:** Không bao giờ commit file `js/config.js` chứa API endpoint lên GitHub. File này phải được thêm vào `.gitignore`.
-
 💡 **Chi phí:** Dự án sử dụng AWS Free Tier. Lưu ý giới hạn:
 - Comprehend: 50,000 units/tháng (3 tháng đầu)
 - Translate: 2 triệu ký tự/tháng (12 tháng đầu)
