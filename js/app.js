@@ -109,8 +109,8 @@ async function analyzeText() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: jsonBody,
-            mode: 'cors' // Explicitly set CORS mode
+            body: jsonBody
+            // Removed mode: 'cors' - let browser decide
         });
         
         console.log('📥 Response received:', {
@@ -176,9 +176,10 @@ async function analyzeImage() {
         
         const uploadResponse = await fetch(uploadURL, {
             method: 'PUT',
+            headers: {
+                'Content-Type': 'image/jpeg'
+            },
             body: selectedFile
-            // Không cần thêm headers khi dùng presigned URL
-            // URL đã chứa tất cả thông tin cần thiết
         });
         
         if (!uploadResponse.ok) {
@@ -218,9 +219,12 @@ async function pollImageResult(imageKey, attempts = 0) {
         
         const response = await fetch(`${API_ENDPOINT_GET_RESULT}/${imageKey}`);
         
+        console.log(`📥 Response status: ${response.status}`);
+        
         if (response.status === 404) {
             // Backend vẫn đang xử lý
             const data = await response.json();
+            console.log('📦 404 Response data:', data);
             if (data.status === 'PROCESSING') {
                 console.log('⏳ Still processing, will retry in 3 seconds...');
                 // Cập nhật loading message
@@ -234,10 +238,13 @@ async function pollImageResult(imageKey, attempts = 0) {
         }
         
         if (!response.ok) {
+            const errorData = await response.text();
+            console.error('❌ Error response:', errorData);
             throw new Error(`Error getting result: ${response.status}`);
         }
         
         const data = await response.json();
+        console.log('📦 Success response data:', data);
         
         if (data.status === 'COMPLETED') {
             console.log('✅ Image analysis completed:', data);
@@ -246,6 +253,7 @@ async function pollImageResult(imageKey, attempts = 0) {
             showError('Processing failed: ' + (data.error || 'Unknown error'));
         } else {
             // Trạng thái không xác định, thử lại
+            console.log('⏳ Unknown status, retrying...');
             setTimeout(() => pollImageResult(imageKey, attempts + 1), pollInterval);
         }
         
@@ -373,12 +381,14 @@ function displayStats(data) {
     animateNumber(sentimentValue, 0, sentimentScore, 1000);
     sentimentValue.textContent = Math.round(sentimentScore) + '%';
     
-    // Entities count (Backend trả về detectedEntities)
-    const entitiesLength = data.detectedEntities ? data.detectedEntities.length : 0;
+    // Entities count (Backend có thể trả về array [] hoặc object {})
+    const entitiesArray = Array.isArray(data.detectedEntities) ? data.detectedEntities : [];
+    const entitiesLength = entitiesArray.length;
     animateNumber(entitiesCount, 0, entitiesLength, 1000);
     
-    // Key phrases count (Backend trả về detectedKeyPhrases)
-    const phrasesLength = data.detectedKeyPhrases ? data.detectedKeyPhrases.length : 0;
+    // Key phrases count (Backend có thể trả về array [] hoặc object {})
+    const phrasesArray = Array.isArray(data.detectedKeyPhrases) ? data.detectedKeyPhrases : [];
+    const phrasesLength = phrasesArray.length;
     animateNumber(phrasesCount, 0, phrasesLength, 1000);
 }
 
@@ -430,7 +440,8 @@ function displaySentiment(data) {
 // 7. HIỂN THỊ ENTITIES (BẢNG)
 // ================================
 function displayEntities(data) {
-    const entities = data.detectedEntities || [];
+    // Backend có thể trả về array [] hoặc object {}
+    const entities = Array.isArray(data.detectedEntities) ? data.detectedEntities : [];
     
     if (entities.length === 0) {
         entitiesContainer.innerHTML = '<p>Không tìm thấy thực thể nào.</p>';
@@ -471,7 +482,8 @@ function displayEntities(data) {
 // 8. HIỂN THỊ KEY PHRASES (TAGS)
 // ================================
 function displayKeyPhrases(data) {
-    const keyPhrases = data.detectedKeyPhrases || [];
+    // Backend có thể trả về array [] hoặc object {}
+    const keyPhrases = Array.isArray(data.detectedKeyPhrases) ? data.detectedKeyPhrases : [];
     
     if (keyPhrases.length === 0) {
         keyphrasesContainer.innerHTML = '<p>Không tìm thấy cụm từ khóa nào.</p>';
@@ -527,7 +539,8 @@ function displayLanguageInfo(data) {
 function displayPII(data) {
     if (!piiContainer) return;
     
-    const piiEntities = data.detectedPiiEntities || [];
+    // Backend có thể trả về array [] hoặc object {}
+    const piiEntities = Array.isArray(data.detectedPiiEntities) ? data.detectedPiiEntities : [];
     
     if (piiEntities.length === 0) {
         piiContainer.innerHTML = '<p>✅ Không phát hiện thông tin cá nhân.</p>';
@@ -563,7 +576,8 @@ function displayPII(data) {
 function displaySyntax(data) {
     if (!syntaxContainer) return;
     
-    const syntax = data.syntaxAnalysis || [];
+    // Backend có thể trả về array [] hoặc object {}
+    const syntax = Array.isArray(data.syntaxAnalysis) ? data.syntaxAnalysis : [];
     
     if (syntax.length === 0) {
         syntaxContainer.innerHTML = '<p>Không có dữ liệu phân tích cú pháp.</p>';
@@ -592,7 +606,8 @@ function displaySyntax(data) {
 function displayToxicity(data) {
     if (!toxicityContainer) return;
     
-    const toxicity = data.toxicityAnalysis || [];
+    // Backend có thể trả về array [] hoặc object {}
+    const toxicity = Array.isArray(data.toxicityAnalysis) ? data.toxicityAnalysis : [];
     
     if (toxicity.length === 0) {
         toxicityContainer.innerHTML = '<p>✅ Không phát hiện nội dung độc hại.</p>';
