@@ -5,6 +5,57 @@
 // Export selected file state
 export let selectedFile = null;
 
+// Initialize drag & drop
+export function initDragAndDrop() {
+    const uploadBox = document.querySelector('.image-upload-box');
+    const imageInput = document.getElementById('image-input');
+    
+    if (!uploadBox || !imageInput) return;
+    
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadBox.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    // Highlight drop zone when item is dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+        uploadBox.addEventListener(eventName, () => {
+            uploadBox.classList.add('drag-over');
+        }, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        uploadBox.addEventListener(eventName, () => {
+            uploadBox.classList.remove('drag-over');
+        }, false);
+    });
+    
+    // Handle dropped files
+    uploadBox.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        
+        if (files.length > 0) {
+            // Simulate file input change
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(files[0]);
+            imageInput.files = dataTransfer.files;
+            
+            // Trigger change event
+            const event = new Event('change', { bubbles: true });
+            imageInput.dispatchEvent(event);
+        }
+    }, false);
+    
+    console.log('[OK] Drag & drop initialized');
+}
+
+function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
 // File selection handler
 export function handleImageSelect(e) {
     const file = e.target.files[0];

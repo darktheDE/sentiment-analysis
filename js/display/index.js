@@ -1,6 +1,7 @@
 // Display Results - Main Entry Point
 import { elements } from '../dom.js';
 import { showResults } from '../ui/state.js';
+import { cacheResultsForExport } from '../ui/export.js';
 import { displayStats } from './stats.js';
 import { displaySentiment } from './sentiment.js';
 import { displayEntities } from './entities.js';
@@ -13,8 +14,9 @@ import { displayToxicity } from './toxicity.js';
 export function displayResults(data) {
     console.log('Displaying results:', data);
     
-    // Store for debugging
+    // Store for debugging and export
     window.lastAnalysisData = data;
+    cacheResultsForExport(data);
     
     // Show results section
     showResults();

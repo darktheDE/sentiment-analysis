@@ -3,7 +3,11 @@ import { elements } from './dom.js';
 import { analyzeText } from './api/text-analysis.js';
 import { analyzeImage } from './api/image-analysis.js';
 import { handleTabSwitch } from './ui/tabs.js';
-import { handleImageSelect } from './ui/file-upload.js';
+import { handleImageSelect, initDragAndDrop } from './ui/file-upload.js';
+import { exportResultsAsJSON } from './ui/export.js';
+
+// Constants
+const EXAMPLE_TEXT = "Amazon Web Services is a great cloud platform. Jeff Bezos is the founder of Amazon, which is headquartered in Seattle.";
 
 // Application state
 let currentMode = 'text';
@@ -27,6 +31,15 @@ function init() {
         selectedFile = handleImageSelect(e);
     });
     
+    // Initialize drag & drop for images
+    initDragAndDrop();
+    
+    // Export JSON button
+    const exportButton = document.getElementById('export-json-button');
+    if (exportButton) {
+        exportButton.addEventListener('click', exportResultsAsJSON);
+    }
+    
     // Keyboard shortcut: Ctrl + Enter
     elements.textInput.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'Enter') {
@@ -40,7 +53,16 @@ function init() {
 // Main analysis handler
 async function handleAnalyze() {
     if (currentMode === 'text') {
-        await analyzeText(elements.textInput.value.trim());
+        let textToAnalyze = elements.textInput.value.trim();
+        
+        // Nếu không nhập gì, dùng example text
+        if (!textToAnalyze) {
+            textToAnalyze = EXAMPLE_TEXT;
+            elements.textInput.value = EXAMPLE_TEXT;
+            console.log('[!] Không có văn bản → dùng example text');
+        }
+        
+        await analyzeText(textToAnalyze);
     } else {
         await analyzeImage(selectedFile);
     }
