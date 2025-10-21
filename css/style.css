@@ -574,99 +574,96 @@ body {
 /* ================================
    Footer
    ================================ */
+/* ================================
+   Footer Styles
+   ================================ */
 .footer {
-    background: rgba(15, 10, 31, 0.9);
-    padding: var(--spacing-lg) 0 var(--spacing-md);
-    border-top: 1px solid var(--border);
-    margin-top: var(--spacing-xl);
+    background: linear-gradient(135deg, rgba(15, 10, 31, 0.95) 0%, rgba(30, 15, 50, 0.95) 100%);
+    padding: 3rem 0 1.5rem;
+    border-top: 1px solid rgba(139, 92, 246, 0.2);
+    margin-top: 4rem;
+    backdrop-filter: blur(10px);
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
-    text-align: left;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
 }
 
 .footer-section {
-    padding: var(--spacing-sm);
+    padding: 0;
 }
 
 .footer-title {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--primary-light);
-    margin-bottom: var(--spacing-sm);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .footer-text {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    margin: 8px 0;
-    line-height: 1.6;
-}
-
-.footer-link {
-    color: var(--primary-light);
-    text-decoration: none;
-    transition: color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.footer-link:hover {
-    color: white;
-    text-decoration: underline;
-}
-
-.link-icon {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0.75rem 0;
+    line-height: 1.8;
 }
 
 .role-badge {
     display: inline-block;
-    background: rgba(139, 92, 246, 0.2);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.25) 0%, rgba(124, 58, 237, 0.25) 100%);
     color: var(--primary-light);
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.8rem;
     font-weight: 500;
-    margin-left: 8px;
+    margin-top: 0.5rem;
+    border: 1px solid rgba(139, 92, 246, 0.3);
 }
 
 .tech-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    justify-content: center;
+    margin-top: 1rem;
 }
 
 .tech-badge {
-    background: rgba(139, 92, 246, 0.2);
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
     color: var(--primary-light);
-    padding: 6px 12px;
-    border-radius: 16px;
-    font-size: 0.8rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
     font-weight: 500;
-    border: 1px solid rgba(139, 92, 246, 0.3);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.35) 0%, rgba(124, 58, 237, 0.35) 100%);
+    border-color: rgba(139, 92, 246, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
 }
 
 .footer-bottom {
     text-align: center;
-    padding-top: var(--spacing-md);
-    border-top: 1px solid var(--border);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(139, 92, 246, 0.2);
+    margin-top: 2rem;
 }
 
 .footer-bottom p {
     margin: 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.5px;
 }
 
 /* ================================
@@ -713,11 +710,15 @@ body {
     
     .footer-content {
         grid-template-columns: 1fr;
-        text-align: center;
+        gap: 2rem;
     }
     
     .footer-section {
-        padding: var(--spacing-sm) 0;
+        padding: 0;
+    }
+    
+    .footer {
+        padding: 2rem 0 1rem;
     }
     
     .stats-grid {

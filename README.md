@@ -1,209 +1,344 @@
-# Ứng dụng Phân tích Cảm xúc Đa Ngôn ngữ (Sentiment Analysis Web App)
+# 🎭 Ứng dụng Phân tích Cảm xúc Đa Ngôn ngữ (Sentiment Analysis Web App)
 
-Đây là dự án cuối kỳ cho môn học **Điện toán đám mây (CLCO432779)**. Ứng dụng này là một công cụ web sử dụng kiến trúc "serverless" trên nền tảng Amazon Web Services (AWS) để cung cấp khả năng phân tích văn bản thông minh theo thời gian thực.
+> Dự án cuối kỳ môn **Điện toán Đám mây (CLCO432779)** - HCMUTE 2025
 
-## Thành viên nhóm
+Ứng dụng web phân tích văn bản thông minh sử dụng kiến trúc **serverless** trên nền tảng Amazon Web Services (AWS), cung cấp khả năng phân tích cảm xúc, trích xuất thông tin từ văn bản và hình ảnh theo thời gian thực.
 
-*   **[Nguyễn Văn Quang Duy - @quangduyreal](https://github.com/QuangDuyReal)** - Chịu trách nhiệm phát triển Backend & Hạ tầng Cloud (AWS).
-*   **[Đỗ Kiến Hưng - @darktheDE](https://github.com/darktheDE)** - Chịu trách nhiệm phát triển Frontend & Tích hợp (UI/UX, Amplify).
+---
 
-## Mục tiêu dự án
+## 👥 Thành viên nhóm
 
-Dự án nhằm mục đích xây dựng một ứng dụng web có khả năng:
-1.  Nhận một đoạn văn bản từ người dùng.
-2.  Sử dụng các dịch vụ AI/ML của AWS để phân tích và trích xuất các thông tin sâu sắc từ văn bản đó.
-3.  Hiển thị kết quả một cách trực quan và dễ hiểu cho người dùng.
-4.  Chứng minh sự hiểu biết và khả năng vận dụng kiến trúc "serverless" và các mô hình dịch vụ đám mây (IaaS, PaaS, SaaS).
+| Thành viên | Vai trò | GitHub |
+|------------|---------|--------|
+| **Nguyễn Văn Quang Duy** | Leader & Backend | [@QuangDuyReal](https://github.com/QuangDuyReal) |
+| **Đỗ Kiến Hưng** | Frontend & Deploy | [@darktheDE](https://github.com/darktheDE) |
 
-## Các tính năng chính
+---
 
-*   **Phân tích Cảm xúc (Sentiment Analysis):** Xác định cảm xúc tổng thể của văn bản (Tích cực, Tiêu cực, Trung tính, Hỗn hợp) với độ tin cậy chi tiết cho từng loại cảm xúc.
-*   **Hỗ trợ Đa ngôn ngữ:** Tự động phát hiện ngôn ngữ của văn bản đầu vào. Hỗ trợ 12 ngôn ngữ chính: tiếng Anh (en), Tây Ban Nha (es), Pháp (fr), Đức (de), Ý (it), Bồ Đào Nha (pt), Ả Rập (ar), Hindi (hi), Nhật (ja), Hàn (ko), Trung Quốc giản thể (zh) và phồn thể (zh-TW). Đối với các ngôn ngữ khác (như tiếng Việt), hệ thống tự động dịch sang tiếng Anh bằng Amazon Translate trước khi phân tích.
-*   **Trích xuất Thực thể (Entity Recognition):** Nhận diện và phân loại các thực thể được đặt tên như Tên người (PERSON), Tổ chức (ORGANIZATION), Địa điểm (LOCATION), và nhiều loại khác với điểm tin cậy.
-*   **Trích xuất Cụm từ khóa (Key Phrase Extraction):** Rút ra các cụm từ quan trọng nhất để tóm tắt nội dung chính của văn bản với điểm đánh giá độ quan trọng.
-*   **(Tính năng mở rộng - Tùy chọn) Phân tích Cảm xúc từ Hình ảnh:** Cho phép người dùng upload ảnh chứa văn bản (ví dụ: ảnh chụp bình luận), hệ thống sẽ tự động đọc chữ (OCR) và thực hiện phân tích.
+## 🎯 Mục tiêu dự án
 
-## Cấu trúc Dự án
+Xây dựng ứng dụng web có khả năng:
+1. ✅ Nhận văn bản hoặc hình ảnh từ người dùng
+2. ✅ Sử dụng AWS AI/ML để phân tích và trích xuất thông tin sâu sắc
+3. ✅ Hiển thị kết quả trực quan, dễ hiểu với giao diện hiện đại
+4. ✅ Chứng minh hiểu biết về kiến trúc serverless và các mô hình dịch vụ đám mây
+
+---
+
+## ✨ Các tính năng chính
+
+### 🔍 Phân tích Văn bản (Text Analysis)
+- **Phân tích Cảm xúc**: Xác định cảm xúc (Tích cực, Tiêu cực, Trung tính, Hỗn hợp) với độ tin cậy chi tiết
+- **Trích xuất Thực thể**: Nhận diện tên người, tổ chức, địa điểm, ngày tháng, số liệu...
+- **Cụm từ Khóa**: Rút trích các cụm từ quan trọng nhất
+- **Phát hiện Ngôn ngữ**: Tự động phát hiện và dịch (hỗ trợ 12+ ngôn ngữ)
+- **Phát hiện PII**: Nhận diện thông tin cá nhân (tên, email, số điện thoại, địa chỉ...)
+- **Phân tích Cú pháp**: Phân loại từ loại (danh từ, động từ, tính từ...) với bản địa hóa tiếng Việt
+- **Phát hiện Độc hại**: Phân tích mức độ độc hại, lăng mạ, quấy rối trong nội dung
+
+### 🖼️ Phân tích Hình ảnh (Image Analysis)
+- **OCR (Textract)**: Trích xuất văn bản từ ảnh tự động
+- **Polling thông minh**: Cơ chế bất đồng bộ với 60 lần thử (6 phút timeout)
+- **Upload trực tiếp**: Presigned S3 URL cho hiệu suất tối ưu
+- Hỗ trợ định dạng: JPG, PNG, HEIC (tối đa 5MB)
+
+### 🎨 Giao diện hiện đại
+- **Theme**: Purple gradient với glassmorphism effects
+- **Responsive**: Tương thích mọi thiết bị (Desktop, Tablet, Mobile)
+- **Interactive**: Animations, loading states, error handling
+- **Tab-based UI**: Chuyển đổi dễ dàng giữa Text/Image mode
+
+---
+
+## 📂 Cấu trúc Dự án (v2.0 - Modular Architecture)
 
 ```
 sentiment-analysis/
-├── index.html              # Trang chính của ứng dụng
+├── index.html                    # Trang chính (274 dòng)
 ├── css/
-│   └── style.css          # File CSS tạo kiểu giao diện
+│   └── style.css                # Stylesheet với purple theme
 ├── js/
-│   ├── config.js          # Cấu hình API endpoint (không commit lên Git)
-│   └── app.js             # Logic JavaScript chính
-├── lambda/
-│   └── sentiment_function.py  # Code Lambda function (Python)
-├── .gitignore             # Danh sách file không đẩy lên Git
-└── README.md              # File này
+│   ├── app.js                   # Entry point - khởi tạo ứng dụng
+│   ├── config.js                # API endpoints (gitignored)
+│   ├── dom.js                   # Centralized DOM references
+│   ├── api/
+│   │   ├── text-analysis.js     # Text API calls
+│   │   └── image-analysis.js    # Image upload & polling logic
+│   ├── ui/
+│   │   ├── state.js             # UI state management + utilities
+│   │   ├── tabs.js              # Tab switching logic
+│   │   └── file-upload.js       # File selection & validation
+│   └── display/
+│       ├── index.js             # Display coordinator
+│       ├── stats.js             # Stats cards display
+│       ├── sentiment.js         # Sentiment breakdown
+│       ├── entities.js          # Entities table
+│       ├── keyphrases.js        # Key phrases tags
+│       ├── language.js          # Language detection info
+│       ├── pii.js               # PII detection results
+│       ├── syntax.js            # Syntax analysis (Vietnamese POS)
+│       └── toxicity.js          # Toxicity analysis
+├── .gitignore
+└── README.md                    # File này
 ```
 
-## Sơ đồ Kiến trúc Hệ thống
+### 🔄 Thay đổi so với v1.0
+- **Before**: Monolithic `app.js` (1054 dòng) - khó bảo trì
+- **After**: 16 modules được tổ chức theo trách nhiệm rõ ràng
+- **Lợi ích**: Dễ đọc, dễ debug, dễ mở rộng, phù hợp báo cáo học thuật
 
+---
+
+## 🏗️ Kiến trúc Hệ thống
+
+### Frontend (Pure JavaScript - No Framework)
 ```
-+----------------+
-| Người dùng     |
-| (Trình duyệt)  |
-+----------------+
-       |
-       | 1. Truy cập trang web
-       v
-+-----------------------------+                +-------------------------+
-| AWS Amplify Hosting         |                | Amazon API Gateway      |
-| (Frontend: HTML, JS, CSS)   |--------------->| (REST API /analyze)     |
-| - CI/CD từ GitHub           | 2. POST request +-------------------------+
-+-----------------------------+                | 3. Trigger Lambda
-                                                v
-                                       +-------------------------+
-                                       | AWS Lambda Function     |
-                                       | (Python + boto3)        |
-                                       +-------------------------+
-                                          |                    |
-                    4a. Detect language   |                    | 4b. Translate (nếu cần)
-                                          v                    v
-                                  +------------------+   +------------------+
-                                  | AWS Comprehend   |   | Amazon Translate |
-                                  | - Sentiment      |   | (vi → en)        |
-                                  | - Entities       |   +------------------+
-                                  | - Key Phrases    |
-                                  +------------------+
-
-<-- 5. Trả kết quả JSON về frontend theo chiều ngược lại -->
-
+┌─────────────────────────────────────────────┐
+│  Browser (index.html)                       │
+│  ├── CSS (Purple Gradient Theme)            │
+│  └── JavaScript ES6 Modules                 │
+│      ├── app.js (Main entry)                │
+│      ├── api/ (Backend communication)       │
+│      ├── ui/ (State & interactions)         │
+│      └── display/ (Result rendering)        │
+└─────────────────────────────────────────────┘
+                    │
+                    ▼
+┌─────────────────────────────────────────────┐
+│  AWS Amplify Hosting                        │
+│  - Static site hosting                      │
+│  - CI/CD from GitHub                        │
+│  - HTTPS enabled                            │
+└─────────────────────────────────────────────┘
 ```
 
-**Luồng hoạt động chi tiết:**
+### Backend (AWS Serverless)
 
-1.  **Frontend (AWS Amplify):** 
-    - Xây dựng bằng HTML, CSS, JavaScript thuần (vanilla JS - không dùng framework)
-    - Triển khai trên **AWS Amplify Hosting** với CI/CD tự động từ GitHub
-    - File `js/config.js` chứa API endpoint (được gitignore để bảo mật)
-    
-2.  **API Gateway:** 
-    - Cung cấp REST API endpoint `/analyze` với phương thức POST
-    - Nhận request JSON từ frontend và trigger Lambda function
-    - Bật CORS để cho phép frontend gọi API
-    
-3.  **AWS Lambda (Backend Logic):** 
-    - Runtime: Python 3.x với thư viện boto3
-    - **Bước 1:** Parse request body để lấy văn bản
-    - **Bước 2:** Gọi `comprehend.detect_dominant_language()` để phát hiện ngôn ngữ
-    - **Bước 3:** Nếu ngôn ngữ không nằm trong 12 ngôn ngữ hỗ trợ, gọi `translate.translate_text()` để dịch sang tiếng Anh
-    - **Bước 4:** Gọi song song 3 API của Comprehend:
-        - `detect_sentiment()` → Cảm xúc + điểm số
-        - `detect_entities()` → Thực thể (người, địa điểm, tổ chức...)
-        - `detect_key_phrases()` → Cụm từ khóa
-    - **Bước 5:** Format và trả về JSON response với CORS headers
-    
-4.  **AWS Comprehend:** 
-    - Dịch vụ AI/ML cốt lõi để phân tích văn bản
-    - Hỗ trợ 12 ngôn ngữ chính cho sentiment analysis
-    
-5.  **Amazon Translate:** 
-    - Tự động dịch các ngôn ngữ không được hỗ trợ (như tiếng Việt) sang tiếng Anh
-    - Đảm bảo độ chính xác cao cho phân tích
-    
-6.  **AWS IAM:** 
-    - Quản lý quyền truy cập: Lambda cần permissions cho Comprehend, Translate và CloudWatch Logs
+#### 📝 Text Analysis (Đồng bộ)
+```
+Client → API Gateway → Lambda → Comprehend/Translate → Response
+         /analyze-text   (Python)    (AI/ML Services)
+```
 
-## Hướng dẫn cài đặt và chạy dự án (dành cho người phát triển)
+#### 🖼️ Image Analysis (Bất đồng bộ - 3 bước)
+```
+1. Client → GET /get-upload-url → Lambda → Presigned S3 URL
+2. Client → PUT to S3 URL → S3 Bucket → Trigger Lambda
+3. Lambda → Textract (OCR) → Comprehend → Save to DynamoDB
+4. Client → Poll GET /get-result/{key} → Lambda → DynamoDB → Results
+   (Polling: 6s interval, max 60 attempts = 6 minutes)
+```
+
+### AWS Services Map
+| Service | Vai trò |
+|---------|---------|
+| **API Gateway** | REST API endpoints với CORS |
+| **Lambda** | Serverless compute (Python 3.x) |
+| **Comprehend** | Sentiment, Entities, Key Phrases, Syntax, PII, Toxicity |
+| **Translate** | Dịch tự động (vi→en, etc.) |
+| **Textract** | OCR - trích xuất text từ ảnh |
+| **S3** | Lưu trữ ảnh upload |
+| **DynamoDB** | Lưu kết quả phân tích ảnh |
+| **Amplify** | Hosting + CI/CD cho frontend |
+| **IAM** | Quản lý quyền truy cập |
+
+---
+
+## 🚀 Hướng dẫn Cài đặt & Chạy
 
 ### Yêu cầu
-*   Tài khoản AWS
-*   Cài đặt Git
-*   Node.js (để chạy các công cụ frontend nếu cần)
-*   Python 3.9+ (cho backend Lambda)
+- ✅ Tài khoản AWS (Free Tier)
+- ✅ Git
+- ✅ Python 3.9+ (cho local testing backend)
+- ✅ Web browser hiện đại (Chrome, Firefox, Edge)
 
-### Triển khai Backend
-1.  Tạo IAM Role với các policy `AWSLambdaBasicExecutionRole`, `ComprehendReadOnly`, `TranslateReadOnly`.
-2.  Tạo Lambda Function, chọn runtime Python và gán Role đã tạo.
-3.  Dán code từ file `lambda/sentiment_function.py` vào trình soạn thảo code của Lambda.
-4.  Tạo REST API trên API Gateway, tạo resource `/analyze` với phương thức `POST`, tích hợp với Lambda Function.
-5.  Kích hoạt CORS và Deploy API.
+### 1️⃣ Clone Repository
+```bash
+git clone https://github.com/darktheDE/sentiment-analysis.git
+cd sentiment-analysis
+```
 
-### Triển khai Frontend
-1.  Clone repository này về máy:
-    ```bash
-    git clone https://github.com/darktheDE/sentiment-analysis.git
-    cd sentiment-analysis
-    ```
-2.  Tạo file `js/config.js` và thêm API endpoint:
-    ```javascript
-    const API_ENDPOINT = 'https://xxxxxx.execute-api.region.amazonaws.com/prod/analyze';
-    ```
-    (Thay thế bằng "Invoke URL" thực tế từ API Gateway của bạn)
-    
-3.  **QUAN TRỌNG:** Đảm bảo file `.gitignore` có dòng `js/config.js` để không push API endpoint lên GitHub.
+### 2️⃣ Cấu hình Frontend
+Tạo file `js/config.js` (file này đã được gitignore):
+```javascript
+const API_ENDPOINT_TEXT = 'https://YOUR-API-ID.execute-api.region.amazonaws.com/Prod/analyze-text';
+const API_ENDPOINT_GET_UPLOAD_URL = 'https://YOUR-API-ID.execute-api.region.amazonaws.com/Prod/get-upload-url';
+const API_ENDPOINT_GET_RESULT = 'https://YOUR-API-ID.execute-api.region.amazonaws.com/Prod/get-result';
+```
 
-4.  Test ứng dụng trên máy local (có thể dùng Live Server extension trong VS Code).
+### 3️⃣ Chạy Local Development Server
+```bash
+# Sử dụng Python (đơn giản nhất)
+python -m http.server 8000
 
-5.  Push code lên GitHub repository của bạn:
-    ```bash
-    git add .
-    git commit -m "Initial frontend setup"
-    git push origin main
-    ```
+# Hoặc VS Code Live Server extension
+# Right-click index.html → "Open with Live Server"
+```
 
-6.  Trên AWS Console:
-    - Vào dịch vụ **AWS Amplify**
-    - Chọn "New app" → "Host web app"
-    - Kết nối với GitHub repository
-    - Amplify sẽ tự động deploy mỗi khi có git push
+Truy cập: `http://localhost:8000`
 
-## Hướng dẫn sử dụng
+### 4️⃣ Deploy lên AWS Amplify
+1. Push code lên GitHub repository của bạn
+2. Vào AWS Console → Amplify
+3. Chọn "New app" → "Host web app"
+4. Connect GitHub repository
+5. Amplify tự động build & deploy
 
-1.  Truy cập URL ứng dụng (được cung cấp bởi AWS Amplify sau khi deploy).
-2.  Nhập một đoạn văn bản vào ô textarea. Hỗ trợ nhiều ngôn ngữ:
-    - Tiếng Anh, Tây Ban Nha, Pháp, Đức, Ý, Bồ Đào Nha
-    - Tiếng Ả Rập, Hindi, Nhật, Hàn, Trung Quốc
-    - Tiếng Việt (sẽ tự động dịch sang tiếng Anh trước khi phân tích)
-3.  Nhấn nút **"Phân tích"**.
-4.  Xem kết quả hiển thị:
-    - **Cảm xúc:** Tích cực/Tiêu cực/Trung tính/Hỗn hợp với phần trăm độ tin cậy
-    - **Thực thể:** Bảng các tên người, tổ chức, địa điểm được phát hiện
-    - **Từ khóa:** Danh sách các cụm từ quan trọng
+**⚠️ Lưu ý**: Cấu hình biến môi trường `API_ENDPOINT_*` trên Amplify Console nếu không muốn hard-code vào `config.js`.
 
-### Ví dụ văn bản để test:
+---
+
+## 📖 Hướng dẫn Sử dụng
+
+### Phân tích Văn bản
+1. Chọn tab **"Văn bản"**
+2. Nhập văn bản vào ô textarea (tối đa 5000 bytes UTF-8)
+3. Click **"Phân tích"** hoặc nhấn **Ctrl + Enter**
+4. Xem kết quả:
+   - **Stats Cards**: Tổng quan nhanh (sentiment, số entities, phrases)
+   - **Sentiment Breakdown**: Biểu đồ thanh 4 cảm xúc với phần trăm
+   - **Entities Table**: Bảng thực thể được phát hiện
+   - **Key Phrases**: Tags của các cụm từ quan trọng
+   - **Language Info**: Ngôn ngữ phát hiện + thông tin dịch (nếu có)
+   - **PII Detection**: Thông tin cá nhân được che
+   - **Syntax Analysis**: 15 tokens đầu tiên với từ loại (tiếng Việt)
+   - **Toxicity Analysis**: Mức độ độc hại của nội dung
+
+### Phân tích Hình ảnh
+1. Chọn tab **"Hình ảnh"**
+2. Click **"Chọn hình ảnh"** (JPG, PNG, HEIC, max 5MB)
+3. Click **"Phân tích"**
+4. Đợi polling (loading spinner, tối đa 6 phút)
+5. Kết quả hiển thị tương tự Text Analysis
+
+### Ví dụ Test
+**Tiếng Anh:**
 ```
 Amazon Web Services is a great cloud platform. Jeff Bezos is the founder of Amazon, which is headquartered in Seattle.
 ```
-**Kết quả mong đợi:** 
 - Sentiment: POSITIVE (89%)
-- Entities: AWS, Jeff Bezos, Amazon, Seattle
-- Key Phrases: great cloud platform, founder, etc.
+- Entities: Amazon Web Services, Jeff Bezos, Amazon, Seattle
 
-## Công nghệ sử dụng
+**Tiếng Việt:**
+```
+Tôi rất thích dịch vụ này. AWS Comprehend thật tuyệt vời!
+```
+- Sẽ tự động dịch sang tiếng Anh để phân tích
+- Translation Info hiển thị thông báo đã dịch
+
+---
+
+## 🛠️ Công nghệ Sử dụng
 
 ### Frontend
-- HTML5, CSS3, JavaScript (Vanilla JS - không dùng framework)
-- AWS Amplify Hosting với CI/CD
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| HTML5 | - | Semantic markup |
+| CSS3 | - | Purple gradient theme, glassmorphism |
+| JavaScript | ES6+ | Modular architecture, no framework |
+| ES6 Modules | - | Import/Export between files |
 
 ### Backend
-- AWS Lambda (Python 3.x)
-- AWS API Gateway (REST API)
-- Thư viện: `boto3` (AWS SDK for Python)
+| Service | Runtime | Libraries |
+|---------|---------|-----------|
+| AWS Lambda | Python 3.12 | boto3 (AWS SDK) |
+| API Gateway | REST API | CORS enabled |
 
-### AI/ML Services
-- AWS Comprehend (Sentiment Analysis, Entity Recognition, Key Phrase Extraction)
-- Amazon Translate (Dịch tự động)
+### AWS AI/ML Services
+- **Amazon Comprehend**: Sentiment, Entities, Key Phrases, Syntax, PII, Toxicity
+- **Amazon Translate**: Multi-language translation
+- **Amazon Textract**: OCR for image analysis
 
-### Security & IAM
-- IAM Roles với least-privilege permissions
-- CORS configuration
-- API secrets management với `.gitignore`
+### DevOps
+- **AWS Amplify**: Hosting, CI/CD
+- **GitHub**: Version control, collaboration
+- **Git**: Source control
 
-## Lưu ý quan trọng
+---
 
-💡 **Chi phí:** Dự án sử dụng AWS Free Tier. Lưu ý giới hạn:
-- Comprehend: 50,000 units/tháng (3 tháng đầu)
-- Translate: 2 triệu ký tự/tháng (12 tháng đầu)
-- Lambda: 1 triệu request miễn phí/tháng
+## 📊 Chi phí & AWS Free Tier
 
-📚 **Tài liệu tham khảo:**
-- [AWS Comprehend Documentation](https://docs.aws.amazon.com/comprehend/)
+| Service | Free Tier Limit | Estimated Usage |
+|---------|-----------------|-----------------|
+| **Comprehend** | 50K units/month (3 months) | ~1000 requests/month |
+| **Translate** | 2M chars/month (12 months) | ~100K chars/month |
+| **Textract** | 1K pages/month (3 months) | ~50 images/month |
+| **Lambda** | 1M requests/month | ~500 requests/month |
+| **API Gateway** | 1M requests/month | ~500 requests/month |
+| **S3** | 5GB storage | <100MB |
+| **DynamoDB** | 25GB storage | <1GB |
+| **Amplify** | 1000 build minutes/month | ~50 minutes/month |
+
+**💰 Ước tính**: Dự án nằm hoàn toàn trong Free Tier nếu sử dụng hợp lý (~$0/month).
+
+---
+
+## 🐛 Troubleshooting
+
+### Lỗi thường gặp
+
+#### 1. Module loading error
+```
+Failed to load module script: Expected a JavaScript module script
+```
+**Giải pháp**: 
+- Đảm bảo `<script type="module" src="js/app.js"></script>` có `type="module"`
+- Chạy trên local server (không dùng `file://`)
+
+#### 2. CORS error khi gọi API
+```
+Access to fetch at 'https://...' from origin 'http://localhost:8000' has been blocked by CORS
+```
+**Giải pháp**: 
+- Kiểm tra API Gateway đã enable CORS
+- Response headers phải có `Access-Control-Allow-Origin: *`
+
+#### 3. 404 Not Found khi polling
+```
+GET /get-result/abc123 → 404
+```
+**Giải pháp**: 
+- Kiểm tra response body: có thể là `{"status": "PROCESSING"}` (không phải lỗi)
+- Chờ thêm vài lần polling (S3 trigger có độ trễ)
+
+#### 4. Blank results sau phân tích
+**Giải pháp**: 
+- Mở Console (F12) → Network tab
+- Kiểm tra API response field names (camelCase vs PascalCase)
+- Tham khảo `docs/BACKEND_API_V2.md` cho format chính xác
+
+---
+
+## 📚 Tài liệu Tham khảo
+
+### AWS Documentation
+- [AWS Comprehend](https://docs.aws.amazon.com/comprehend/)
 - [AWS Lambda Python](https://docs.aws.amazon.com/lambda/latest/dg/lambda-python.html)
+- [Amazon Translate](https://docs.aws.amazon.com/translate/)
+- [Amazon Textract](https://docs.aws.amazon.com/textract/)
 - [AWS Amplify Hosting](https://docs.aws.amazon.com/amplify/)
 
 ---
-_Dự án được thực hiện trong khuôn khổ môn học **Điện toán đám mây (CLCO432779)** - HCMUTE, Học kỳ 5 (2025-2026)._
+
+## 🎓 Bối cảnh Học thuật
+
+**Môn học**: Điện toán Đám mây (CLCO432779)  
+**Học kỳ**: 1 (2025-2026)  
+**Trường**: Đại học Sư phạm Kỹ thuật TP.HCM (HCMUTE)
+
+### Kiến thức được áp dụng
+- ✅ **IaaS**: EC2-like resources (S3, DynamoDB)
+- ✅ **PaaS**: Lambda, API Gateway, Amplify
+- ✅ **SaaS**: Comprehend, Translate, Textract
+- ✅ **Serverless Architecture**: Event-driven, auto-scaling
+- ✅ **Cloud Design Patterns**: Presigned URLs, Polling, Async processing
+
+---
+
+## 📄 License
+
+Dự án này được phát triển cho mục đích học tập. Code được public để chia sẻ kiến thức.
+
+---
+
+© 2025 Sentiment Analyzer - HCMUTE - CLCO432779
