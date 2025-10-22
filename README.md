@@ -91,6 +91,10 @@ sentiment-analysis/
 
 ## 🏗️ Kiến trúc Hệ thống
 
+### 📊 Tổng quan Kiến trúc AWS
+![AWS Architecture Overview](graph/FinalAWSFlow.drawio.png)
+*Sơ đồ tổng quan kiến trúc AWS Serverless với các luồng Text và Image Analysis*
+
 ### Frontend (Pure JavaScript - No Framework)
 ```
 ┌─────────────────────────────────────────────┐
@@ -112,6 +116,14 @@ sentiment-analysis/
 └─────────────────────────────────────────────┘
 ```
 
+#### 🗂️ Kiến trúc Frontend theo lớp
+![Frontend Architecture](graph/Simplified%20Layered%20Architecture%20View%20FE.png)
+*Kiến trúc phân lớp của Frontend với các module được tổ chức rõ ràng*
+
+#### 🔗 Biểu đồ phụ thuộc Module
+![Module Dependency](graph/Module%20Dependency%20Graph.png)
+*Sơ đồ quan hệ giữa các JavaScript modules trong dự án*
+
 ### Backend (AWS Serverless)
 
 #### 📝 Text Analysis (Đồng bộ)
@@ -119,6 +131,9 @@ sentiment-analysis/
 Client → API Gateway → Lambda → Comprehend/Translate → Response
          /analyze-text   (Python)    (AI/ML Services)
 ```
+
+![Text Analysis Flow](graph/textAnalysis.png)
+*Luồng xử lý phân tích văn bản từ client đến AWS services*
 
 #### 🖼️ Image Analysis (Bất đồng bộ - 3 bước)
 ```
@@ -128,6 +143,12 @@ Client → API Gateway → Lambda → Comprehend/Translate → Response
 4. Client → Poll GET /get-result/{key} → Lambda → DynamoDB → Results
    (Polling: 6s interval, max 60 attempts = 6 minutes)
 ```
+
+![Image Analysis Flow](graph/imageAnalysis.png)
+*Luồng xử lý phân tích hình ảnh với cơ chế polling bất đồng bộ*
+
+![Image Data Pipeline](graph/IMAGE%20ANALYSIS%20DATA%20PIPELINE.png)
+*Pipeline xử lý dữ liệu chi tiết cho Image Analysis*
 
 ### AWS Services Map
 | Service | Vai trò |
@@ -141,6 +162,10 @@ Client → API Gateway → Lambda → Comprehend/Translate → Response
 | **DynamoDB** | Lưu kết quả phân tích ảnh |
 | **Amplify** | Hosting + CI/CD cho frontend |
 | **IAM** | Quản lý quyền truy cập |
+
+#### 🔄 Resource Dependency Graph
+![Resource Dependencies](graph/Resource%20Dependency%20Graph.png)
+*Sơ đồ phụ thuộc giữa các AWS resources trong hệ thống*
 
 ---
 
@@ -183,6 +208,10 @@ Truy cập: `http://localhost:8000`
 3. Chọn "New app" → "Host web app"
 4. Connect GitHub repository
 5. Amplify tự động build & deploy
+
+#### 📦 IaC Deployment Flow
+![IaC Flow](graph/IaC%20Deployment%20Flow.png)
+*Quy trình triển khai Infrastructure as Code với AWS SAM/CloudFormation*
 
 **⚠️ Lưu ý**: Cấu hình biến môi trường `API_ENDPOINT_*` trên Amplify Console nếu không muốn hard-code vào `config.js`.
 
